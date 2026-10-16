@@ -1,6 +1,9 @@
 # Predicting Next-Day S&P 500 Stock Returns with Linear Regression
 
-The project tests whether information available at the close of a trading day (recent returns, price trend, volatility and trading volume) can explain and predict the next day's return of S&P 500 stocks.
+Course project for **CSDA5320 (Python)**. The project tests whether information available at the close of a trading day (recent returns, price trend, volatility and trading volume) can explain and predict the next day's return of S&P 500 stocks.
+
+**Author:** [Your Name]  
+**Student ID:** [Your Student ID]
 
 ## Research Question and Hypotheses
 
@@ -47,6 +50,16 @@ The data are downloaded automatically with `kagglehub` and are not stored in thi
 
 **Conclusion:** The features are jointly significant in the training data, so the in-sample null hypothesis is rejected. However, they explain only about 0.14% of the variation in next-day returns, and out of sample the model does not beat the baseline, so the null hypothesis of no predictive value cannot be rejected. The negative coefficients on recent returns and 5-day momentum suggest a faint short-term reversal effect, but it is far too small to be useful. This is consistent with the weak form of the efficient market hypothesis.
 
+## Repository Structure
+
+```
+.
+├── sp500_regression_project.py   # full analysis (run this first)
+├── dashboard.py                  # Streamlit dashboard
+├── README.md
+├── results/                      # created by the analysis script (CSV tables, key_numbers.txt)
+└── figures/                      # created by the analysis script (PNG charts)
+```
 
 ## How to Run
 
@@ -64,8 +77,23 @@ python sp500_regression_project.py
 
 This can take a few minutes because the dataset has about 2.7 million rows. All printed output is also saved to `results/key_numbers.txt`.
 
+**3. Launch the dashboard** (from the same folder)
 
+```bash
+streamlit run dashboard.py
+```
+
+The dashboard has tabs for the overview, EDA, regression results, out-of-sample performance, hypothesis tests, and an interactive ticker explorer.
+
+## Limitations
+
+- Survivorship bias is possible because the dataset only contains companies in the S&P 500 index.
+- Transaction costs and taxes are ignored.
+- Linear regression cannot capture nonlinear relationships, and the residuals are heavy-tailed.
+- Only price and volume features are used (no fundamentals, news or sentiment).
+- The test period is a single historical period (April 2018 to February 2026).
 
 ## Tools
 
-Python, pandas, NumPy, seaborn, matplotlib, statsmodels, SciPy, kagglehub, 
+Python, pandas, NumPy, seaborn, matplotlib, statsmodels, SciPy, kagglehub, Streamlit.
+
