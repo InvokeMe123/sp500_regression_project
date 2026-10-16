@@ -1,0 +1,112 @@
+Rows before cleaning: 2,703,531   after cleaning: 2,699,133
+Rows used for modelling: 2,693,941
+Number of companies: 472
+Date range: 2000-01-18 to 2026-02-19
+
+--- DESCRIPTIVE STATISTICS ---
+                     count    mean       std     min     25%     50%     75%          max       skew
+daily_return     2693941.0  0.0007    0.0236 -0.6812 -0.0090  0.0005  0.0103       1.0212     0.5630
+return_lag_1     2693941.0  0.0007    0.0236 -0.6812 -0.0090  0.0005  0.0103       1.0212     0.5632
+return_lag_5     2693941.0  0.0007    0.0236 -0.6812 -0.0090  0.0005  0.0103       1.0212     0.5643
+daily_range      2693941.0  0.0264    0.0212  0.0000  0.0143  0.0207  0.0312       2.0916     4.9542
+volume_change    2693941.0  0.2201  137.5950 -0.9999 -0.2253 -0.0124  0.2736  224854.6667  1620.8403
+volume_ma_ratio  2693941.0  1.0063    0.3483  0.0001  0.7875  0.9559  1.1613       4.9990     1.6789
+momentum_5d      2693941.0  0.0035    0.0513 -0.8829 -0.0194  0.0034  0.0260       3.7586     1.1376
+volatility_10d   2693941.0  0.0190    0.0143  0.0000  0.0105  0.0151  0.0225       0.4619     3.6381
+next_day_return  2693941.0  0.0007    0.0236 -0.6812 -0.0090  0.0005  0.0103       1.0212     0.5618
+
+Share of up-days (next_day_return > 0): 0.5097
+
+--- TIME SERIES CHECK: market return tomorrow ~ market return today ---
+slope = -0.0573,  p-value = 0.04481,  R-squared = 0.0033
+
+Train: 2000-01-18 to 2018-04-18 (1,784,203 rows)
+Test : 2018-04-20 to 2026-02-19 (909,293 rows)
+
+--- VARIANCE INFLATION FACTORS ---
+        feature   VIF
+   daily_return 1.295
+   return_lag_1 1.292
+   return_lag_5 1.004
+    daily_range 2.502
+  volume_change 2.216
+volume_ma_ratio 2.392
+    momentum_5d 1.586
+ volatility_10d 2.331
+
+=== MODEL 1: SIMPLE LINEAR REGRESSION ===
+slope = -0.02318, t-test p-value = 2.01e-151, clustered p-value = 0.01717, R-squared = 0.000385
+
+=== MODEL 2: MULTIPLE LINEAR REGRESSION (standard output) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:        next_day_return   R-squared:                       0.001
+Model:                            OLS   Adj. R-squared:                  0.001
+Method:                 Least Squares   F-statistic:                     321.1
+Date:                Fri, 16 Oct 2026   Prob (F-statistic):               0.00
+Time:                        00:19:19   Log-Likelihood:             4.1245e+06
+No. Observations:             1784203   AIC:                        -8.249e+06
+Df Residuals:                 1784194   BIC:                        -8.249e+06
+Df Model:                           8                                         
+Covariance Type:            nonrobust                                         
+===================================================================================
+                      coef    std err          t      P>|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------
+const              -0.0002   8.44e-05     -1.971      0.049      -0.000   -9.35e-07
+daily_return       -0.0157      0.001    -15.625      0.000      -0.018      -0.014
+return_lag_1       -0.0175      0.001    -17.455      0.000      -0.019      -0.016
+return_lag_5       -0.0104      0.001    -11.714      0.000      -0.012      -0.009
+daily_range         0.0107      0.001      7.380      0.000       0.008       0.014
+volume_change   -5.344e-06   4.96e-05     -0.108      0.914      -0.000    9.18e-05
+volume_ma_ratio     0.0005   8.24e-05      5.677      0.000       0.000       0.001
+momentum_5d        -0.0090      0.001    -17.993      0.000      -0.010      -0.008
+volatility_10d      0.0111      0.002      5.392      0.000       0.007       0.015
+==============================================================================
+Omnibus:                   629452.117   Durbin-Watson:                   1.442
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):         82059297.878
+Skew:                           0.659   Prob(JB):                         0.00
+Kurtosis:                      36.197   Cond. No.                         193.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+Coefficient table (standard and date-clustered p-values):
+                 coefficient  std_error  p_value_standard  p_value_clustered_by_date
+const               -0.00017    0.00008           0.04872                    0.74613
+daily_return        -0.01574    0.00101           0.00000                    0.14090
+return_lag_1        -0.01750    0.00100           0.00000                    0.13004
+return_lag_5        -0.01036    0.00088           0.00000                    0.33745
+daily_range          0.01071    0.00145           0.00000                    0.46177
+volume_change       -0.00001    0.00005           0.91412                    0.98341
+volume_ma_ratio      0.00047    0.00008           0.00000                    0.25249
+momentum_5d         -0.00904    0.00050           0.00000                    0.11277
+volatility_10d       0.01114    0.00207           0.00000                    0.58169
+
+Overall F-test: F = 321.096, p-value = 0
+R-squared = 0.001438, Adjusted R-squared = 0.001433
+Joint Wald test with clustered SE: chi-square = 19.927, p-value = 0.01061
+
+=== OUT-OF-SAMPLE RESULTS (test period) ===
+RMSE model    = 0.022755
+RMSE baseline = 0.022758
+Out-of-sample R-squared = 0.000263   (positive = better than baseline)
+Paired t-test on daily squared error (H1: model error < baseline error): t = 0.144, p-value = 0.4428
+
+Direction accuracy: model = 0.5208, baseline (always predict 1) = 0.5222
+Share of days the model predicts 'up': 0.8387
+Binomial test (H1: accuracy > baseline accuracy): p-value = 0.9955
+Date-level paired t-test on accuracy gain: mean gain = -0.00141, t = -0.604, p-value = 0.7271
+
+Average next-day return, top-half minus bottom-half of predictions: 0.00025 per day
+One-sided t-test: t = 1.565, p-value = 0.05887
+
+=== SUMMARY OF HYPOTHESIS TESTS ===
+                                           test  p_value decision_at_5_percent
+    Simple regression slope (t-test, clustered)  0.01717             Reject H0
+             Multiple regression overall F-test  0.00000             Reject H0
+             Joint Wald test, clustered by date  0.01061             Reject H0
+   Daily squared-error gain > 0 (paired t-test)  0.44276     Fail to reject H0
+       Direction accuracy > baseline (binomial)  0.99545     Fail to reject H0
+Direction accuracy gain > 0 (date-level t-test)  0.72712     Fail to reject H0
+   Top-half minus bottom-half return spread > 0  0.05887     Fail to reject H0

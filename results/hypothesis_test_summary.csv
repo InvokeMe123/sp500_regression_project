@@ -1,0 +1,8 @@
+test,p_value,decision_at_5_percent
+"Simple regression slope (t-test, clustered)",0.017165493933811494,Reject H0
+Multiple regression overall F-test,0.0,Reject H0
+"Joint Wald test, clustered by date",0.010614829572758994,Reject H0
+Daily squared-error gain > 0 (paired t-test),0.44276171640858986,Fail to reject H0
+Direction accuracy > baseline (binomial),0.9954527248827985,Fail to reject H0
+Direction accuracy gain > 0 (date-level t-test),0.7271187700570445,Fail to reject H0
+Top-half minus bottom-half return spread > 0,0.05887152284315225,Fail to reject H0
