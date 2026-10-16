@@ -1,9 +1,7 @@
 # Predicting Next-Day S&P 500 Stock Returns with Linear Regression
 
-Course project for **CSDA5320 (Python)**. The project tests whether information available at the close of a trading day (recent returns, price trend, volatility and trading volume) can explain and predict the next day's return of S&P 500 stocks.
+The project tests whether information available at the close of a trading day (recent returns, price trend, volatility and trading volume) can explain and predict the next day's return of S&P 500 stocks.
 
-**Author:** [Your Name]  
-**Student ID:** [Your Student ID]
 
 ## Research Question and Hypotheses
 
